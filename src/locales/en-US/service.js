@@ -1,5 +1,6 @@
 export default {
   'service.name': 'name',
+  'service.owner': 'owner',
   'service.namespace': 'namespace',
   'service.type': 'type',
   'service.selectors': 'selectors',
