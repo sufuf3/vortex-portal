@@ -1,5 +1,6 @@
 export default {
   'network.name': 'name',
+  'network.owner': 'owner',
   'network.bridgeName': 'bridge',
   'network.interfaceName': 'interface name',
   'network.nodes': 'nodes',
