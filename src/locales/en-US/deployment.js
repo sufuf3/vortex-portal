@@ -1,5 +1,4 @@
 export default {
-<<<<<<< HEAD
   'deployment.name': 'name',
   'deployment.restartPolicy': 'restart policy',
   'deployment.labels': 'labels',
@@ -11,20 +10,6 @@ export default {
   'deployment.currentPod': 'current pod',
   'deployment.availablePod': 'available pod',
   'deployment.age': 'age',
-=======
-  'deployment.name': 'Name',
-  'deployment.owner': 'Owner',
-  'deployment.restartPolicy': 'Restart Policy',
-  'deployment.labels': 'Labels',
-  'deployment.envVars': 'Env Vars',
-  'deployment.capability': 'Run as privileged',
-  'deployment.type': 'Type',
-  'deployment.namespace': 'Namespace',
-  'deployment.desiredPod': 'Desired Pod',
-  'deployment.currentPod': 'Current Pod',
-  'deployment.availablePod': 'Available Pod',
-  'deployment.age': 'Age',
->>>>>>> owner of deployments
   'deployment.add': 'Create Deployment',
   'deployment.addWithNetwork': 'Create Deployment with network',
   'deployment.replicas': 'number of pods',
