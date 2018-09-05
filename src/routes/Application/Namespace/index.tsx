@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as NamespaceModel from '@/models/Namespace';
 import { connect } from 'react-redux';
 import * as styles from './styles.module.scss';
-import { Button, Icon, Popconfirm, Card, Table } from 'antd';
+import { Button, Icon, Popconfirm, Card, Table, notification } from 'antd';
 import { ColumnProps } from 'antd/lib/table';
 import * as moment from 'moment';
 import { FormattedMessage } from 'react-intl';
@@ -50,6 +50,18 @@ class Namespace extends React.Component<NamespaceProps, NamespaceState> {
   protected handleSubmit = (namespace: NamespaceModel.Namespace) => {
     this.props.addNamespace(namespace);
     this.setState({ visibleModal: false });
+    return notification.success({
+      message: 'Success',
+      description: 'Create the namespace successfully.'
+    });
+  };
+
+  protected handleRemoveNamespace = (id: string) => {
+    this.props.removeNamespace(id);
+    return notification.success({
+      message: 'Success',
+      description: 'Delete the namespace successfully.'
+    });
   };
 
   protected renderAction = (id: string | undefined) => {
@@ -57,7 +69,7 @@ class Namespace extends React.Component<NamespaceProps, NamespaceState> {
       <Popconfirm
         key="action.delete"
         title={<FormattedMessage id="action.confirmToDelete" />}
-        onConfirm={this.props.removeNamespace.bind(this, id)}
+        onConfirm={this.handleRemoveNamespace.bind(this, id)}
       >
         <a href="javascript:;">
           <FormattedMessage id="action.delete" />
