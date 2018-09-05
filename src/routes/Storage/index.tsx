@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Card, Button, Icon, Table, Popconfirm } from 'antd';
+import { Card, Button, Icon, Table, Popconfirm, notification } from 'antd';
 import { injectIntl, FormattedMessage, InjectedIntlProps } from 'react-intl';
 import { ColumnProps } from 'antd/lib/table';
 import * as moment from 'moment';
@@ -206,6 +206,10 @@ class Storage extends React.PureComponent<StorageProps, StorageState> {
         this.props.removeVolume(id);
         break;
     }
+    return notification.success({
+      message: 'Success',
+      description: 'Delete successfully.'
+    });
   };
 
   protected handleAddItem = () => {
@@ -283,6 +287,11 @@ class Storage extends React.PureComponent<StorageProps, StorageState> {
           });
         break;
     }
+
+    return notification.success({
+      message: 'Success',
+      description: 'Create successfully.'
+    });
   };
 
   public renderTableFooter = () => {
