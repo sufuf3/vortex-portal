@@ -1,6 +1,15 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Button, Tag, Icon, Tree, Popconfirm, Card, Table } from 'antd';
+import {
+  Button,
+  Tag,
+  Icon,
+  Tree,
+  Popconfirm,
+  Card,
+  Table,
+  notification
+} from 'antd';
 import { ColumnProps } from 'antd/lib/table';
 import * as moment from 'moment';
 import { FormattedMessage } from 'react-intl';
@@ -62,6 +71,18 @@ class Network extends React.Component<NetworkProps, NetworkState> {
       this.setState({ isCreating: false });
       successCB();
     });
+    return notification.success({
+      message: 'Success',
+      description: 'Create the network successfully.'
+    });
+  };
+
+  protected handleRemoveNetwork = (id: string) => {
+    this.props.removeNetwork(id);
+    return notification.success({
+      message: 'Success',
+      description: 'Delete the network successfully.'
+    });
   };
 
   protected renderTags = (tags: Array<string | number>) => {
@@ -81,7 +102,7 @@ class Network extends React.Component<NetworkProps, NetworkState> {
       <Popconfirm
         key="action.delete"
         title={<FormattedMessage id="action.confirmToDelete" />}
-        onConfirm={this.props.removeNetwork.bind(this, id)}
+        onConfirm={this.handleRemoveNetwork.bind(this, id)}
       >
         <a href="javascript:;">
           <FormattedMessage id="action.delete" />
