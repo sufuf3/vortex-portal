@@ -2,7 +2,16 @@ import * as React from 'react';
 import * as ServiceModel from '@/models/Service';
 import { connect } from 'react-redux';
 import * as styles from './styles.module.scss';
-import { Button, Icon, Tree, Tag, Popconfirm, Card, Table } from 'antd';
+import {
+  Button,
+  Icon,
+  Tree,
+  Tag,
+  Popconfirm,
+  Card,
+  Table,
+  notification
+} from 'antd';
 import { ColumnProps } from 'antd/lib/table';
 import * as moment from 'moment';
 import { FormattedMessage } from 'react-intl';
@@ -51,6 +60,18 @@ class Service extends React.Component<ServiceProps, ServiceState> {
   protected handleSubmit = (service: ServiceModel.Service) => {
     this.props.addService(service);
     this.setState({ visibleModal: false });
+    return notification.success({
+      message: 'Success',
+      description: 'Create the namespace successfully.'
+    });
+  };
+
+  protected handleRemoveService = (id: string) => {
+    this.props.removeService(id);
+    return notification.success({
+      message: 'Success',
+      description: 'Delete the service successfully.'
+    });
   };
 
   protected renderAction = (id: string | undefined) => {
@@ -58,7 +79,7 @@ class Service extends React.Component<ServiceProps, ServiceState> {
       <Popconfirm
         key="action.delete"
         title={<FormattedMessage id="action.confirmToDelete" />}
-        onConfirm={this.props.removeService.bind(this, id)}
+        onConfirm={this.handleRemoveService.bind(this, id)}
       >
         <a href="javascript:;">
           <FormattedMessage id="action.delete" />
