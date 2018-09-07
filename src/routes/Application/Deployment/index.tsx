@@ -15,7 +15,7 @@ import {
 } from 'antd';
 import { ColumnProps } from 'antd/lib/table';
 import * as moment from 'moment';
-import { FormattedMessage } from 'react-intl';
+import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 import { InjectedAuthRouterProps } from 'redux-auth-wrapper/history4/redirect';
 
 import { RootState, RTDispatch } from '@/store/ducks';
@@ -34,7 +34,7 @@ interface DeploymentState {
   deletable: boolean;
 }
 
-type DeploymentProps = OwnProps & InjectedAuthRouterProps;
+type DeploymentProps = OwnProps & InjectedAuthRouterProps & InjectedIntlProps;
 interface OwnProps {
   pods: PodModel.Pods;
   podsNics: PodModel.PodsNics;
@@ -189,9 +189,15 @@ class Deployment extends React.Component<DeploymentProps, DeploymentState> {
     this.setState({ deletable: false });
     this.props.removeDeployment(id);
     clearInterval(this.intervalPodId);
-    return notification.success({
-      message: 'Success',
-      description: 'Delete the deployment successfully.'
+
+    const { formatMessage } = this.props.intl;
+    notification.success({
+      message: formatMessage({
+        id: 'action.success'
+      }),
+      description: formatMessage({
+        id: 'deployment.hint.delete.success'
+      })
     });
   };
 
@@ -380,4 +386,4 @@ const mapDispatchToProps = (dispatch: RTDispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Deployment);
+)(injectIntl(Deployment));

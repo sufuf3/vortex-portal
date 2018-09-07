@@ -12,8 +12,8 @@ import {
 } from 'antd';
 import { ColumnProps } from 'antd/lib/table';
 import * as moment from 'moment';
-import { FormattedMessage } from 'react-intl';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 import { InjectedAuthRouterProps } from 'redux-auth-wrapper/history4/redirect';
 
 import * as styles from './styles.module.scss';
@@ -34,7 +34,7 @@ interface NetworkState {
   isCreating: boolean;
 }
 
-type NetworkProps = OwnProps & InjectedAuthRouterProps;
+type NetworkProps = OwnProps & InjectedAuthRouterProps & InjectedIntlProps;
 
 interface OwnProps {
   nodes: Nodes;
@@ -71,17 +71,29 @@ class Network extends React.Component<NetworkProps, NetworkState> {
       this.setState({ isCreating: false });
       successCB();
     });
-    return notification.success({
-      message: 'Success',
-      description: 'Create the network successfully.'
+
+    const { formatMessage } = this.props.intl;
+    notification.success({
+      message: formatMessage({
+        id: 'action.success'
+      }),
+      description: formatMessage({
+        id: 'network.hint.create.success'
+      })
     });
   };
 
   protected handleRemoveNetwork = (id: string) => {
     this.props.removeNetwork(id);
-    return notification.success({
-      message: 'Success',
-      description: 'Delete the network successfully.'
+
+    const { formatMessage } = this.props.intl;
+    notification.success({
+      message: formatMessage({
+        id: 'action.success'
+      }),
+      description: formatMessage({
+        id: 'network.hint.delete.success'
+      })
     });
   };
 
@@ -229,4 +241,4 @@ const mapDispatchToProps = (dispatch: RTDispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Network);
+)(injectIntl(Network));

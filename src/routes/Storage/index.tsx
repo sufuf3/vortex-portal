@@ -206,9 +206,15 @@ class Storage extends React.PureComponent<StorageProps, StorageState> {
         this.props.removeVolume(id);
         break;
     }
-    return notification.success({
-      message: 'Success',
-      description: 'Delete successfully.'
+
+    const { formatMessage } = this.props.intl;
+    notification.success({
+      message: formatMessage({
+        id: 'action.success'
+      }),
+      description: formatMessage({
+        id: 'Delete successfully.'
+      })
     });
   };
 
@@ -288,9 +294,14 @@ class Storage extends React.PureComponent<StorageProps, StorageState> {
         break;
     }
 
-    return notification.success({
-      message: 'Success',
-      description: 'Create successfully.'
+    const { formatMessage } = this.props.intl;
+    notification.success({
+      message: formatMessage({
+        id: 'action.success'
+      }),
+      description: formatMessage({
+        id: 'Create successfully.'
+      })
     });
   };
 

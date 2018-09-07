@@ -5,7 +5,7 @@ import * as styles from './styles.module.scss';
 import { Button, Icon, Popconfirm, Card, Table, notification } from 'antd';
 import { ColumnProps } from 'antd/lib/table';
 import * as moment from 'moment';
-import { FormattedMessage } from 'react-intl';
+import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 import { InjectedAuthRouterProps } from 'redux-auth-wrapper/history4/redirect';
 
 import { Dispatch } from 'redux';
@@ -18,7 +18,7 @@ interface NamespaceState {
   visibleModal: boolean;
 }
 
-type NamespaceProps = OwnProps & InjectedAuthRouterProps;
+type NamespaceProps = OwnProps & InjectedAuthRouterProps & InjectedIntlProps;
 
 interface OwnProps {
   namespaces: Array<NamespaceModel.Namespace>;
@@ -50,17 +50,29 @@ class Namespace extends React.Component<NamespaceProps, NamespaceState> {
   protected handleSubmit = (namespace: NamespaceModel.Namespace) => {
     this.props.addNamespace(namespace);
     this.setState({ visibleModal: false });
-    return notification.success({
-      message: 'Success',
-      description: 'Create the namespace successfully.'
+
+    const { formatMessage } = this.props.intl;
+    notification.success({
+      message: formatMessage({
+        id: 'action.success'
+      }),
+      description: formatMessage({
+        id: 'namespace.hint.create.success'
+      })
     });
   };
 
   protected handleRemoveNamespace = (id: string) => {
     this.props.removeNamespace(id);
-    return notification.success({
-      message: 'Success',
-      description: 'Delete the namespace successfully.'
+
+    const { formatMessage } = this.props.intl;
+    notification.success({
+      message: formatMessage({
+        id: 'action.success'
+      }),
+      description: formatMessage({
+        id: 'namespace.hint.delete.success'
+      })
     });
   };
 
@@ -148,4 +160,4 @@ const mapDispatchToProps = (dispatch: RTDispatch & Dispatch<RootAction>) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Namespace);
+)(injectIntl(Namespace));
